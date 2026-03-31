@@ -56,9 +56,10 @@ module.exports = (pool, formatarData, parseDecimal) => {
       INSERT INTO viagens (
       cod_viagem, carga, data_cadastro, data_venda,
       data_faturamento, 
-      placa, motorista, cliente, fone, contato
+      placa, motorista, cod_cliente, cliente, fone, contato
        municipio, uf, endereco, bairro, numero, 
-       valor, latitude, longitude, numero_do_pedido,
+       latitude, longitude,
+       numero_do_pedido,
        nf, valor
       formapgto, observacoes, cod_vendedor,
       vendedor, peso, stts_viagem
