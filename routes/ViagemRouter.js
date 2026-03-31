@@ -23,29 +23,29 @@ module.exports = (pool, formatarData, parseDecimal) => {
                 v.cod_viagem,
                 v.carga,
                 formatarData(v.data_cadastro),
-                //formatarData(v.data_venda),
-                //formatarData(v.data_faturamento),
+                formatarData(v.data_venda),
+                formatarData(v.data_faturamento),
                 v.placa,
                 v.motorista,
-                //v.cod_cliente,
+                v.cod_cliente,
                 v.cliente,
                 v.fone,
-                //v.contato,
+                v.contato,
                 v.municipio,
                 v.uf,
                 v.endereco,
                 v.bairro,
                 v.numero,
-                //parseDecimal(v.latitude),
-                //parseDecimal(v.longitude),
-                //v.numero_do_pedido,
-                //v.nf,
+                parseDecimal(v.latitude),
+                parseDecimal(v.longitude),
+                v.numero_do_pedido,
+                v.nf,
                 parseDecimal(v.valor),
                 v.formapgto,
                 v.observacoes,
-                //v.cod_vendedor,
-                //v.vendedor,
-                //v.peso,
+                v.cod_vendedor,
+                v.vendedor,
+                v.peso,
                 v.stts_viagem
             ]);
 
@@ -54,11 +54,14 @@ module.exports = (pool, formatarData, parseDecimal) => {
             await valores.map((linha, index) => {
                 pool.query(`
       INSERT INTO viagens (
-      cod_viagem, carga, data_cadastro, 
-      placa, motorista, cliente, fone, 
+      cod_viagem, carga, data_cadastro, data_venda,
+      data_faturamento, 
+      placa, motorista, cliente, fone, contato
        municipio, uf, endereco, bairro, numero, 
-       valor,
-      formapgto, observacoes,stts_viagem
+       valor, latitude, longitude, numero_do_pedido,
+       nf, valor
+      formapgto, observacoes, cod_vendedor,
+      vendedor, peso, stts_viagem
       )
       VALUES(?)
     `, [valores[index]])
