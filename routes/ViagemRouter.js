@@ -54,15 +54,12 @@ module.exports = (pool, formatarData, parseDecimal) => {
             await valores.map((linha, index) => {
                 pool.query(`
       INSERT INTO viagens (
-      cod_viagem, carga, data_cadastro, data_venda,
-      data_faturamento, 
-      placa, motorista, cod_cliente, cliente, fone, contato
-       municipio, uf, endereco, bairro, numero, 
-       latitude, longitude,
-       numero_do_pedido,
-       nf, valor
-      formapgto, observacoes, cod_vendedor,
-      vendedor, peso, stts_viagem
+        cod_viagem, carga, data_cadastro, data_venda,
+        data_faturamento, placa, motorista, cod_cliente, cliente, fone, contato,
+        municipio, uf, endereco, bairro, numero, latitude, longitude,
+        numero_do_pedido, nf, valor, formapgto, 
+        observacoes, cod_vendedor, vendedor, peso, 
+        stts_viagem
       )
       VALUES(?)
     `, [valores[index]])
