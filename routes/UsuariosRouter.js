@@ -15,7 +15,7 @@ module.exports = (pool) => {
 
     try {
 
-      const [usuarios] = await pool.query(`SELECT id, nome, funcao, ativo FROM usuarios WHERE cpf = ? AND senha = ?`,
+      const [usuarios] = await pool.query(`SELECT  nome, funcao, ativo FROM usuarios WHERE cpf = ? AND senha = ?`,
         [acesso.login, acesso.senha])
 
       if (usuarios.length > 0) {
@@ -64,7 +64,7 @@ module.exports = (pool) => {
       const novoUsuario = req.body
 
 
-      const [usuarios] = await pool.query(`SELECT id, nome, funcao, ativo FROM usuarios WHERE cpf = ?`,
+      const [usuarios] = await pool.query(`SELECT  nome, funcao, ativo FROM usuarios WHERE cpf = ?`,
         [novoUsuario.cpf])
 
       if (usuarios.length > 0) {
