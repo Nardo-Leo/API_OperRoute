@@ -156,7 +156,8 @@ module.exports = (pool, formatarData, parseDecimal) => {
 
             console.log('Entrou na /finalizar')
 
-            const { cod_viagem, carga, forma_pagamento, foto, destinatarioId, assinatura } = req.body;
+            const { cod_viagem, carga, fotoCarga, forma_pagamento, foto, destinatarioId, assinatura,
+                assMotorista } = req.body;
 
 
 
@@ -170,24 +171,30 @@ module.exports = (pool, formatarData, parseDecimal) => {
             passar o Base64 e um nome pro arquivo*/
 
             const urlFoto = await driveService.uploadBase64(foto, `Comprovante_${carga}_${cod_viagem}.png`);
+            const urlFotoCarga = await driveService.uploadBase64(fotoCarga, `Doc_Carga_${carga}_${cod_viagem}.png`); 
             const urlDestinatarioId = await driveService.uploadBase64(destinatarioId, `RG_${carga}.png`);
             const urlAssinatura = await driveService.uploadBase64(assinatura, `assinatura_${carga}_${cod_viagem}.png`);
+            const urlAssMotorista = await driveService.uploadBase64(assMotorista, `assMotorista_${carga}_${cod_viagem}.png`);
 
             // Atualizar o MySQL com os links e o status
             const [result] = await pool.query(`
             UPDATE viagens 
             SET 
                 formapgto = ?, 
-                url_img_um = ?,
-                url_img_dois = ?, 
-                ass_dest = ?, 
+                ass_destinatario = ?, 
+                ass_motorista = ?,
+                url_img_carga = ?,
+                url_img_pgmto  = ?,
+                url_img_rg_cliente = ?, 
                 stts_viagem = 'Concluída' 
             WHERE cod_viagem = ? AND carga = ?`,
                 [
                     forma_pagamento,
-                    urlFoto,        // enviado para url_img_um
-                    urlDestinatarioId,
-                    urlAssinatura,   // enviado para ass_dest
+                    urlAssinatura,
+                    urlAssMotorista,
+                    urlFotoCarga,                                       
+                    urlFoto,  // enviado para url_img_um
+                    urlDestinatarioId, // enviado para ass_dest               
                     cod_viagem,
                     carga
                 ]
